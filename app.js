@@ -19,7 +19,7 @@ var generateRss = function(res){
 	fs.readFile(__dirname + '/data.json', function(err, data){
 		if(err)
 			throw err;
-		var dataArray = JSON.parse(data);
+		var dataArray = JSON.parse(data), currentItem;
 		dataArray = dataArray.select(function(item){
 			item.date = new Date(item.date);
 			return item;
@@ -33,7 +33,9 @@ var generateRss = function(res){
 			site_url: 'http://general-conference-rss.herokuapp.com/'
 		});
 		for(var i = 0; i < dataArray.length; i++){
-			rss.item(dataArray[i]);
+			currentItem = dataArray[i];
+			currentItem.enclosure = {url: currentItem.url, type:'audio/mpeg'};
+			rss.item(currentItem);
 		}
 		res.writeHead(200, {"Content-Type": "rss/xml"});
 		res.write(rss.xml());
