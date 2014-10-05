@@ -8,7 +8,9 @@ var server = http.createServer(function(req,res){
 	if(path == '/rss'){
 		generateRss(res);
 	} else{
-		res.redirect('https://www.lds.org/general-conference?lang=eng');
+		res.statusCode = 302;
+		res.setHeader('Location', 'https://www.lds.org/general-conference?lang=eng');
+		res.end();
 	}
 });
 
@@ -27,8 +29,8 @@ var generateRss = function(res){
 		});
 		var rss = new RSS({
 			title: 'Daily Conference Talks',
-			feed_url: 'thegraybeals.com',
-			site_url: 'thegraybeals.com'
+			feed_url: 'http://general-conference-rss.herokuapp.com/rss',
+			site_url: 'http://general-conference-rss.herokuapp.com/'
 		});
 		for(var i = 0; i < dataArray.length; i++){
 			rss.item(dataArray[i]);
