@@ -6,11 +6,11 @@ var generateData = function(dateIn){
 		title = $el.find('span.talk a').text();
 		author = $el.find('span.speaker').text();
 		link = $el.find('.audio-mp3').attr('href').split('?')[0];
-		description = 'Conference talk ' + author;
+		description = author;
 		today.setDate(today.getDate()+1);
 		date = new Date(today);
 		data.push({
-			title: title,
+			title: title || author,
 			author: author,
 			description: description,
 			url: link,

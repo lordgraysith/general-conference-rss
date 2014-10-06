@@ -16,6 +16,7 @@ var server = http.createServer(function(req,res){
 
 var generateRss = function(res){
 	var now = new Date();
+	console.log(now + ': Generating RSS');
 	fs.readFile(__dirname + '/data.json', function(err, data){
 		if(err)
 			throw err;
@@ -27,12 +28,18 @@ var generateRss = function(res){
 		dataArray = dataArray.where(function(item){
 			return now > item.date;
 		});
+		dataArray.sort(function(a,b){
+			if(a.date > b.date){
+				return -1;
+			}
+			return 1;
+		});
 		var rss = new RSS({
 			title: 'Daily Conference Talks',
 			feed_url: 'http://general-conference-rss.herokuapp.com/rss',
 			site_url: 'http://general-conference-rss.herokuapp.com/'
 		});
-		for(var i = 0; i < dataArray.length; i++){
+		for(var i = 0; i < 14 && i < dataArray.length; i++){
 			currentItem = dataArray[i];
 			currentItem.enclosure = {url: currentItem.url, type:'audio/mpeg'};
 			rss.item(currentItem);
