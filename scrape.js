@@ -8,7 +8,8 @@ var generateData = function(dateIn){
 		link = $el.find('.audio-mp3').attr('href').split('?')[0];
 		if(title === 'The Sustaining of Church Officers' ||
 			title.indexOf('Church Auditing Department') > -1 ||
-			title.indexOf('Statistical Report') > -1){
+			title.indexOf('Statistical Report') > -1 ||
+			author.indexOf('The Church of Jesus Christ of Latter-day Saints') > -1){
 			return;
 		}
 		description = author;
