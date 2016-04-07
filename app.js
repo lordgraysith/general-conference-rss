@@ -7,7 +7,11 @@ var server = http.createServer(function(req,res){
 	var path = req.url;
 	if(path == '/rss'){
 		generateRss(res);
-	} else{
+	} else if (path == '/image'){
+		var img = fs.readFileSync('./conference.jpg');
+		res.writeHead(200, {'Content-Type': 'image/jpg' });
+    res.end(img, 'binary');
+	} else {
 		res.statusCode = 302;
 		res.setHeader('Location', 'https://www.lds.org/general-conference?lang=eng');
 		res.end();
@@ -37,7 +41,29 @@ var generateRss = function(res){
 		var rss = new RSS({
 			title: 'Daily Conference Talks',
 			feed_url: 'http://general-conference-rss.herokuapp.com/rss',
-			site_url: 'http://general-conference-rss.herokuapp.com/'
+			site_url: 'http://general-conference-rss.herokuapp.com/',
+			image_url: 'http://general-conference-rss.herokuapp.com/image',
+	    custom_namespaces: {
+	      'itunes': 'http://www.itunes.com/dtds/podcast-1.0.dtd'
+	    },
+	    custom_elements: [
+	      {'itunes:subtitle': 'Conference Talks'},
+	      {'itunes:summary': 'Each day a new General Conference talk is published'},
+	      {'itunes:owner': [
+	        {'itunes:name': 'Michael Graybeal'},
+	        {'itunes:email': 'mjgyesme@gmail.com'}
+	      ]},
+	      {'itunes:image': {
+	        _attr: {
+	          href: 'http://general-conference-rss.herokuapp.com/image'
+	        }
+	      }},
+	      {'itunes:category': [
+	        {_attr: {
+	          text: 'Spirituality'
+	        }}
+	      ]}
+	    ]
 		});
 		for(var i = 0; i < 14 && i < dataArray.length; i++){
 			currentItem = dataArray[i];
