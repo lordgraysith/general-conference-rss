@@ -8,8 +8,8 @@ var server = http.createServer(function(req,res){
 	if(path == '/rss'){
 		generateRss(res);
 	} else if (path == '/image'){
-		var img = fs.readFileSync('./conference.jpg');
-		res.writeHead(200, {'Content-Type': 'image/jpg' });
+		var img = fs.readFileSync('./conference.png');
+		res.writeHead(200, {'Content-Type': 'image/png' });
     res.end(img, 'binary');
 	} else {
 		res.statusCode = 302;
