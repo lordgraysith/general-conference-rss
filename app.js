@@ -68,6 +68,11 @@ var generateRss = function(res){
 		for(var i = 0; i < 14 && i < dataArray.length; i++){
 			currentItem = dataArray[i];
 			currentItem.enclosure = {url: currentItem.url, type:'audio/mpeg'};
+			currentItem.custom_elements = [
+				{'itunes:author': currentItem.author},
+				{'itunes:subtitle': currentItem.description},
+				{'itunes:summary': currentItem.description}
+			]
 			rss.item(currentItem);
 		}
 		res.writeHead(200, {"Content-Type": "rss/xml"});
