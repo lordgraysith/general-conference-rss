@@ -2,6 +2,9 @@
 	"name" : "genconf-rss",
 	"description" : "An rss feed for general conference",
 	"author" : "Michael Graybeal <michael@thegraybeals.com>",
+	"scripts": {
+		"start": "node app.js"
+	},
 	"dependencies" : {
 		"rss" : "1.2.1"
 	}
