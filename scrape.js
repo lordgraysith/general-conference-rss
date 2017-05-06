@@ -39,7 +39,8 @@ var parseHtml = html => {
 	return oParser.parseFromString(html, 'text/html');
 }
 
-var generateData = function(dateIn, month, year){
+var generateData = function(dateIn){
+	var [month, year] = document.getElementsByClassName('title')[0].innerText.split(' ')
 	var data = [], today = dateIn || new Date(), promises = [];
 	var htmlCollection = document.getElementsByClassName('lumen-tile')
 	var elementArray = Array.prototype.slice.apply(htmlCollection)
